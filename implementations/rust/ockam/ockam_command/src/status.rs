@@ -13,7 +13,7 @@ use ockam_api::cli_state::NodeState;
 use ockam_api::cloud::controller_multiaddr;
 use ockam_api::nodes::models::base::NodeStatus as NodeStatusModel;
 use ockam_api::nodes::NodeManager;
-use ockam_core::api::{Request, Response, Status};
+use ockam_core::api::{Request, ResponseHeader, Status};
 use ockam_core::route;
 use ockam_node::MessageSendReceiveOptions;
 
@@ -149,7 +149,7 @@ async fn get_orchestrator_version(
         .await?
         .body();
     let mut dec = Decoder::new(&buf);
-    let hdr = dec.decode::<Response>()?;
+    let hdr = dec.decode::<ResponseHeader>()?;
     if hdr.status() == Some(Status::Ok) {
         Ok(dec.decode::<OrchestratorVersionInfo>()?)
     } else {
