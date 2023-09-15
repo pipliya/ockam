@@ -79,8 +79,7 @@ async fn enroll_with_token<R: Runtime>(app: &AppHandle<R>, app_state: &AppState)
         let controller = app_state.controller().await.into_diagnostic()?;
         controller
             .enroll_with_oidc_token(&app_state.context(), token)
-            .await
-            .into_diagnostic()?;
+            .await?;
     }
     system_tray_on_update_with_enroll_status(app, "Retrieving space...")?;
     let space = retrieve_space(app_state).await?;
@@ -110,9 +109,7 @@ async fn retrieve_space(app_state: &AppState) -> Result<Space> {
         let mut spaces = controller
             .list_spaces(&app_state.context())
             .await
-            .map_err(|e| miette!(e))?
-            .success()
-            .into_diagnostic()?;
+            .map_err(|e| miette!(e))?;
         spaces.sort_by(|s1, s2| s1.name.cmp(&s2.name));
         spaces
     };
@@ -127,8 +124,6 @@ async fn retrieve_space(app_state: &AppState) -> Result<Space> {
                 .create_space(&app_state.context(), space_name, vec![])
                 .await
                 .map_err(|e| miette!(e))?
-                .success()
-                .into_diagnostic()?
         }
     };
     app_state
@@ -155,9 +150,7 @@ async fn retrieve_project<R: Runtime>(
     let projects = controller
         .list_projects(&app_state.context())
         .await
-        .map_err(|e| miette!(e))?
-        .success()
-        .into_diagnostic()?;
+        .map_err(|e| miette!(e))?;
     let admin_project = projects
         .iter()
         .filter(|p| p.has_admin_with_email(&email))
@@ -176,15 +169,8 @@ async fn retrieve_project<R: Runtime>(
             let project = controller
                 .create_project(ctx, space.id.to_string(), PROJECT_NAME.to_string(), vec![])
                 .await
-                .map_err(|e| miette!(e))?
-                .success()
-                .into_diagnostic()?;
-            controller
-                .wait_until_project_is_ready(ctx, project)
-                .await
-                .into_diagnostic()?
-                .success()
-                .into_diagnostic()?
+                .map_err(|e| miette!(e))?;
+            controller.wait_until_project_is_ready(ctx, project).await?
         }
     };
     let cli_state = app_state.state().await;
