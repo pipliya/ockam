@@ -46,6 +46,10 @@ mod software;
 /// Main vault types: PublicKey, Secret, SecretAttributes etc...
 mod types;
 
+/// New Vault interface
+#[allow(missing_docs)]
+pub mod v2;
+
 pub use constants;
 pub use error::*;
 pub use software::*;
