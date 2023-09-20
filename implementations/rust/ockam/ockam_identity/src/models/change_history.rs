@@ -14,7 +14,7 @@ pub struct ChangeHistory(#[n(0)] pub Vec<Change>);
 /// Individual Identity change which implies replacing the old key
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct Change {
     /// CBOR serialized [`super::VersionedData`]
     /// where VersionedData::data is CBOR serialized [`ChangeData`]
@@ -40,7 +40,7 @@ pub enum ChangeSignature {
 /// Data inside a [`Change`]
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct ChangeData {
     /// [`ChangeHash`] linking this [`Change`] to a previous
     /// It's mandatory unless this is the very first [`Change`] in the [`ChangeHistory`]

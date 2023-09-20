@@ -12,7 +12,7 @@ use minicbor::{Decode, Encode};
 /// a [`super::super::purpose_key::PurposeKey`] with itself
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct PurposeKeyAttestation {
     /// CBOR serialized [`super::VersionedData`]
     /// where VersionedData::data is CBOR serialized [`PurposeKeyAttestationData`]
@@ -35,7 +35,7 @@ pub enum PurposeKeyAttestationSignature {
 /// Data inside a [`PurposeKeyAttestation`]
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct PurposeKeyAttestationData {
     /// [`Identifier`] of the [`super::super::identity::Identity`] this Purpose Key belongs to
     #[n(1)] pub subject: Identifier,

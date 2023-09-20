@@ -5,7 +5,7 @@ use minicbor::{Decode, Encode};
 /// [`Credential`] and will be used to verify it
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct CredentialAndPurposeKey {
     /// [`Credential`]
     #[n(1)] pub credential: Credential,

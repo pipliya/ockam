@@ -9,7 +9,7 @@ use ockam_core::compat::{collections::BTreeMap, vec::Vec};
 /// Credential
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct Credential {
     /// CBOR serialized [`super::VersionedData`]
     /// where VersionedData::data is CBOR serialized [`CredentialData`]
@@ -32,7 +32,7 @@ pub enum CredentialSignature {
 /// Data inside a [`Credential`]
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct CredentialData {
     /// To whom this Credential was issued
     #[n(1)] pub subject: Option<Identifier>,
@@ -56,7 +56,7 @@ pub struct SchemaId(#[n(0)] pub u64);
 /// Set a keys&values that an Authority (issuer) attests about the Subject
 #[derive(Clone, Debug, PartialEq, Eq, Encode, Decode)]
 #[rustfmt::skip]
-#[cbor(map)]
+// #[cbor(map)] SERMAP
 pub struct Attributes {
     /// [`SchemaId`] that determines which keys&values to expect in the [`Attributes`]
     #[n(1)] pub schema: SchemaId,
