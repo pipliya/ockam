@@ -1,4 +1,4 @@
-use crate::models::{Ed25519PublicKey, P256ECDSAPublicKey, X25519PublicKey};
+use crate::models::{ECDSASHA256CurveP256PublicKey, EdDSACurve25519PublicKey, X25519PublicKey};
 use crate::IdentityError;
 
 use ockam_core::{Error, Result};
@@ -9,7 +9,7 @@ use minicbor::bytes::ByteArray;
 use minicbor::encode::Write;
 use minicbor::{Decode, Decoder, Encode, Encoder};
 
-impl<C> Encode<C> for Ed25519PublicKey {
+impl<C> Encode<C> for EdDSACurve25519PublicKey {
     fn encode<W: Write>(
         &self,
         e: &mut Encoder<W>,
@@ -19,7 +19,7 @@ impl<C> Encode<C> for Ed25519PublicKey {
     }
 }
 
-impl<'b, C> Decode<'b, C> for Ed25519PublicKey {
+impl<'b, C> Decode<'b, C> for EdDSACurve25519PublicKey {
     fn decode(d: &mut Decoder<'b>, ctx: &mut C) -> Result<Self, minicbor::decode::Error> {
         let data = ByteArray::<32>::decode(d, ctx)?;
 
@@ -45,7 +45,7 @@ impl<'b, C> Decode<'b, C> for X25519PublicKey {
     }
 }
 
-impl<C> Encode<C> for P256ECDSAPublicKey {
+impl<C> Encode<C> for ECDSASHA256CurveP256PublicKey {
     fn encode<W: Write>(
         &self,
         e: &mut Encoder<W>,
@@ -55,7 +55,7 @@ impl<C> Encode<C> for P256ECDSAPublicKey {
     }
 }
 
-impl<'b, C> Decode<'b, C> for P256ECDSAPublicKey {
+impl<'b, C> Decode<'b, C> for ECDSASHA256CurveP256PublicKey {
     fn decode(d: &mut Decoder<'b>, ctx: &mut C) -> Result<Self, minicbor::decode::Error> {
         let data = ByteArray::<65>::decode(d, ctx)?;
 
@@ -63,8 +63,8 @@ impl<'b, C> Decode<'b, C> for P256ECDSAPublicKey {
     }
 }
 
-impl From<Ed25519PublicKey> for PublicKey {
-    fn from(value: Ed25519PublicKey) -> Self {
+impl From<EdDSACurve25519PublicKey> for PublicKey {
+    fn from(value: EdDSACurve25519PublicKey) -> Self {
         Self::new(value.0.to_vec(), SecretType::Ed25519)
     }
 }
@@ -75,13 +75,13 @@ impl From<X25519PublicKey> for PublicKey {
     }
 }
 
-impl From<P256ECDSAPublicKey> for PublicKey {
-    fn from(value: P256ECDSAPublicKey) -> Self {
+impl From<ECDSASHA256CurveP256PublicKey> for PublicKey {
+    fn from(value: ECDSASHA256CurveP256PublicKey) -> Self {
         Self::new(value.0.to_vec(), SecretType::NistP256)
     }
 }
 
-impl TryFrom<PublicKey> for Ed25519PublicKey {
+impl TryFrom<PublicKey> for EdDSACurve25519PublicKey {
     type Error = Error;
 
     fn try_from(value: PublicKey) -> Result<Self> {
@@ -115,7 +115,7 @@ impl TryFrom<PublicKey> for X25519PublicKey {
     }
 }
 
-impl TryFrom<PublicKey> for P256ECDSAPublicKey {
+impl TryFrom<PublicKey> for ECDSASHA256CurveP256PublicKey {
     type Error = Error;
 
     fn try_from(value: PublicKey) -> Result<Self> {

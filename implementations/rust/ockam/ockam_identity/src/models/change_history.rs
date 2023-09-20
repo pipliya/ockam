@@ -1,6 +1,6 @@
 use crate::models::{
-    ChangeHash, Ed25519PublicKey, Ed25519Signature, P256ECDSAPublicKey, P256ECDSASignature,
-    TimestampInSeconds,
+    ChangeHash, ECDSASHA256CurveP256PublicKey, ECDSASHA256CurveP256Signature,
+    EdDSACurve25519PublicKey, EdDSACurve25519Signature, TimestampInSeconds,
 };
 use minicbor::{Decode, Encode};
 use ockam_core::compat::vec::Vec;
@@ -32,9 +32,9 @@ pub struct Change {
 #[rustfmt::skip]
 pub enum ChangeSignature {
     /// Signature using EdDSA Ed25519
-    #[n(1)] Ed25519Signature(#[n(0)] Ed25519Signature),
+    #[n(1)] Ed25519Signature(#[n(0)] EdDSACurve25519Signature),
     /// Signature using ECDSA P256
-    #[n(2)] P256ECDSASignature(#[n(0)] P256ECDSASignature),
+    #[n(2)] P256ECDSASignature(#[n(0)] ECDSASHA256CurveP256Signature),
 }
 
 /// Data inside a [`Change`]
@@ -62,7 +62,7 @@ pub struct ChangeData {
 #[rustfmt::skip]
 pub enum PrimaryPublicKey {
     /// EdDSA Ed25519 Public Key
-    #[n(1)] Ed25519PublicKey(#[n(0)] Ed25519PublicKey),
+    #[n(1)] Ed25519PublicKey(#[n(0)] EdDSACurve25519PublicKey),
     /// ECDSA P256 Public Key
-    #[n(2)] P256ECDSAPublicKey(#[n(0)] P256ECDSAPublicKey),
+    #[n(2)] P256ECDSAPublicKey(#[n(0)] ECDSASHA256CurveP256PublicKey),
 }

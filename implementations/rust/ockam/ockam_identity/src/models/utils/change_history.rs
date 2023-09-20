@@ -1,7 +1,8 @@
 use crate::models::utils::get_versioned_data;
 use crate::models::{
-    Change, ChangeData, ChangeHistory, ChangeSignature, Ed25519PublicKey, Ed25519Signature,
-    P256ECDSAPublicKey, P256ECDSASignature, PrimaryPublicKey, VersionedData,
+    Change, ChangeData, ChangeHistory, ChangeSignature, ECDSASHA256CurveP256PublicKey,
+    ECDSASHA256CurveP256Signature, EdDSACurve25519PublicKey, EdDSACurve25519Signature,
+    PrimaryPublicKey, VersionedData,
 };
 use crate::IdentityError;
 
@@ -49,13 +50,13 @@ impl TryFrom<PublicKey> for PrimaryPublicKey {
 
     fn try_from(value: PublicKey) -> Result<Self> {
         match value.stype() {
-            SecretType::Ed25519 => Ok(Self::Ed25519PublicKey(Ed25519PublicKey(
+            SecretType::Ed25519 => Ok(Self::Ed25519PublicKey(EdDSACurve25519PublicKey(
                 value
                     .data()
                     .try_into()
                     .map_err(|_| IdentityError::InvalidKeyData)?,
             ))),
-            SecretType::NistP256 => Ok(Self::P256ECDSAPublicKey(P256ECDSAPublicKey(
+            SecretType::NistP256 => Ok(Self::P256ECDSAPublicKey(ECDSASHA256CurveP256PublicKey(
                 value
                     .data()
                     .try_into()
@@ -82,13 +83,13 @@ impl ChangeSignature {
     /// Try to create a [`ChangeSignature`] using a binary [`Signature`] and its type
     pub fn try_from_signature(signature: Signature, stype: SecretType) -> Result<Self> {
         match stype {
-            SecretType::Ed25519 => Ok(Self::Ed25519Signature(Ed25519Signature(
+            SecretType::Ed25519 => Ok(Self::Ed25519Signature(EdDSACurve25519Signature(
                 signature
                     .as_ref()
                     .try_into()
                     .map_err(|_| IdentityError::InvalidSignatureData)?,
             ))),
-            SecretType::NistP256 => Ok(Self::P256ECDSASignature(P256ECDSASignature(
+            SecretType::NistP256 => Ok(Self::P256ECDSASignature(ECDSASHA256CurveP256Signature(
                 signature
                     .as_ref()
                     .try_into()

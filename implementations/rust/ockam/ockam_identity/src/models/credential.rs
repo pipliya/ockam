@@ -1,5 +1,6 @@
 use crate::models::{
-    ChangeHash, Ed25519Signature, Identifier, P256ECDSASignature, TimestampInSeconds,
+    ChangeHash, ECDSASHA256CurveP256Signature, EdDSACurve25519Signature, Identifier,
+    TimestampInSeconds,
 };
 use minicbor::bytes::ByteVec;
 use minicbor::{Decode, Encode};
@@ -23,9 +24,9 @@ pub struct Credential {
 #[rustfmt::skip]
 pub enum CredentialSignature {
     /// Signature using EdDSA Ed25519 key from the corresponding [`super::PurposeKeyAttestation`]
-    #[n(1)] Ed25519Signature(#[n(0)] Ed25519Signature),
+    #[n(1)] Ed25519Signature(#[n(0)] EdDSACurve25519Signature),
     /// Signature using ECDSA P256 key from the corresponding [`super::PurposeKeyAttestation`]
-    #[n(2)] P256ECDSASignature(#[n(0)] P256ECDSASignature),
+    #[n(2)] P256ECDSASignature(#[n(0)] ECDSASHA256CurveP256Signature),
 }
 
 /// Data inside a [`Credential`]

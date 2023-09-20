@@ -1,6 +1,7 @@
 use crate::models::utils::get_versioned_data;
 use crate::models::{
-    CredentialData, CredentialSignature, Ed25519Signature, P256ECDSASignature, VersionedData,
+    CredentialData, CredentialSignature, ECDSASHA256CurveP256Signature, EdDSACurve25519Signature,
+    VersionedData,
 };
 use crate::{Credential, IdentityError};
 
@@ -34,13 +35,13 @@ impl CredentialSignature {
     /// Try to create a [`CredentialSignature`] using a binary [`Signature`] and its type
     pub fn try_from_signature(signature: Signature, stype: SecretType) -> Result<Self> {
         match stype {
-            SecretType::Ed25519 => Ok(Self::Ed25519Signature(Ed25519Signature(
+            SecretType::Ed25519 => Ok(Self::Ed25519Signature(EdDSACurve25519Signature(
                 signature
                     .as_ref()
                     .try_into()
                     .map_err(|_| IdentityError::InvalidSignatureData)?,
             ))),
-            SecretType::NistP256 => Ok(Self::P256ECDSASignature(P256ECDSASignature(
+            SecretType::NistP256 => Ok(Self::P256ECDSASignature(ECDSASHA256CurveP256Signature(
                 signature
                     .as_ref()
                     .try_into()

@@ -8,8 +8,8 @@ use miette::miette;
 use miette::IntoDiagnostic;
 use minicbor::Encode;
 use ockam::identity::models::{
-    CredentialAndPurposeKey, CredentialData, CredentialSigningKey, Ed25519PublicKey,
-    P256ECDSAPublicKey, PurposeKeyAttestation, PurposeKeyAttestationData, PurposePublicKey,
+    CredentialAndPurposeKey, CredentialData, CredentialSigningKey, ECDSASHA256CurveP256PublicKey,
+    EdDSACurve25519PublicKey, PurposeKeyAttestation, PurposeKeyAttestationData, PurposePublicKey,
     X25519PublicKey,
 };
 use ockam::identity::{Credential, Identifier, Identity, TimestampInSeconds};
@@ -433,7 +433,7 @@ impl fmt::Display for X25519PublicKeyDisplay {
     }
 }
 
-pub struct Ed25519PublicKeyDisplay(pub Ed25519PublicKey);
+pub struct Ed25519PublicKeyDisplay(pub EdDSACurve25519PublicKey);
 
 impl fmt::Display for Ed25519PublicKeyDisplay {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -441,7 +441,7 @@ impl fmt::Display for Ed25519PublicKeyDisplay {
     }
 }
 
-pub struct P256PublicKeyDisplay(pub P256ECDSAPublicKey);
+pub struct P256PublicKeyDisplay(pub ECDSASHA256CurveP256PublicKey);
 
 impl fmt::Display for P256PublicKeyDisplay {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
