@@ -355,7 +355,7 @@ impl Handshake {
 impl Handshake {
     /// Protocol name, used as a secret during the handshake initialization, padded to 32 bytes
     fn protocol_name() -> &'static [u8; 32] {
-        b"Noise_XX_25519_AESGCM_SHA256\0\0\0\0"
+        b"Ockam_XX_25519_AES128_GCM_SHA256"
     }
 
     /// Generate an ephemeral key for the key exchange
