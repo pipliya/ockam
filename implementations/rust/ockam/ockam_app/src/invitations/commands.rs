@@ -38,7 +38,9 @@ async fn accept_invitation_impl<R: Runtime>(id: String, app: &AppHandle<R>) -> c
     }
 
     let controller = state.controller().await.into_diagnostic()?;
-    let res = controller.accept_invitation(&state.context(), id.clone()).await?;
+    let res = controller
+        .accept_invitation(&state.context(), id.clone())
+        .await?;
     debug!(?res);
     info!(?id, "Invitation accepted");
     Ok(())
