@@ -27,7 +27,6 @@ pub trait VaultForSecureChannels: Send + Sync + 'static {
     async fn hkdf_sha256(
         &self,
         salt: &BufferSecretKeyId,
-        info: &[u8],
         ikm: Option<&BufferSecretKeyId>,
         output_number: usize,
     ) -> Result<Vec<BufferSecretKeyId>>;
