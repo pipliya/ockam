@@ -25,7 +25,10 @@ crate-type = ["rlib"]
 path = "src/lib.rs"
 
 [features]
-default = ["std", "storage"]
+default = ["std", "storage", "OCKAM_XX_25519_AES256_GCM_SHA256"]
+OCKAM_XX_25519_AES256_GCM_SHA256 = []
+OCKAM_XX_25519_AES128_GCM_SHA256 = []
+OCKAM_XX_25519_ChaChaPolyBLAKE2s = []
 
 # Feature (enabled by default): "std" enables functionality expected to
 # be available on a standard platform.
@@ -76,6 +79,7 @@ hkdf = { version = "0.12", default-features = false }
 minicbor = { version = "0.20.0", features = ["derive"] }
 ockam_core = { path = "../ockam_core", version = "^0.85.0", default_features = false }
 ockam_macros = { path = "../ockam_macros", version = "^0.31.0", default-features = false }
+# FIXME: Do we need node? For storage?
 ockam_node = { path = "../ockam_node", version = "^0.90.0", default_features = false }
 # ECDSA providers:
 p256 = { version = "0.13.2", default_features = false }

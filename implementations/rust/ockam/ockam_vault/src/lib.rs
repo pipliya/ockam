@@ -27,12 +27,11 @@ compile_error!(r#"The "no_std" feature currently requires the "alloc" feature"#)
 extern crate core;
 
 #[cfg(feature = "alloc")]
-#[macro_use]
 extern crate alloc;
 
 /// Storage
-#[cfg(feature = "storage")]
-pub mod storage;
+// #[cfg(feature = "storage")]
+// pub mod storage;
 
 /// Errors
 mod error;
@@ -46,11 +45,6 @@ mod software;
 /// Main vault types: PublicKey, Secret, SecretAttributes etc...
 mod types;
 
-/// New Vault interface
-#[allow(missing_docs)]
-pub mod v2;
-
-pub use constants;
 pub use error::*;
 pub use software::*;
 pub use traits::*;
